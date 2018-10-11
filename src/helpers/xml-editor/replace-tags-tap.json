@@ -1,0 +1,65 @@
+[
+  {
+    "source": {
+      "name": "sup",
+      "type": "normal",
+      "attributes":[]
+    },
+    "target": {
+      "name": "hi",
+      "type": "normal",
+      "attributes": [
+        {
+          "name":"rend",
+          "value":"superscript"
+        }
+      ]
+    }
+  },
+  {
+    "source": {
+      "name": "sub",
+      "type": "normal",
+      "attributes":[]
+    },
+    "target": {
+      "name": "hi",
+      "type": "normal",
+      "attributes": [
+        {
+          "name":"rend",
+          "value":"subscript"
+        }
+      ]
+    }
+  },
+  {
+    "source": {
+      "name": "u",
+      "type": "normal",
+      "attributes":[]
+    },
+    "target": {
+      "name": "hi",
+      "type": "normal",
+      "attributes": [
+        {
+          "name":"rend",
+          "value":"underline"
+        }
+      ]
+    }
+  },
+  {
+    "source": {
+      "name": "s",
+      "type": "normal",
+      "attributes":[]
+    },
+    "target": {
+      "name": "del",
+      "type": "normal",
+      "attributes": []
+    }
+  }
+]
