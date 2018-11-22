@@ -486,10 +486,16 @@ export class ListView extends Component {
       crossDomain: true,
     })
     .then(function (response) {
-      context.setState({
-        showDeleteConfirm: false,
-      });
-      context.loadItems();
+      if (response.data.status===true) {
+        context.setState({
+          showDeleteConfirm: false,
+        });
+        context.loadItems();
+      }
+      else {
+        alert(response.data.errors);
+      }
+
     })
     .catch(function (error) {
       console.log(error);

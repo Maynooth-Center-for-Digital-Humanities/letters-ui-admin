@@ -85,7 +85,7 @@ export class LoginView extends Component {
         </div>
         <div className="login-box-body">
           <form name="login-form" onSubmit={this.handleFormSubmit}>
-            <div className={this.state.login_error_class}></div>
+            <div className={this.state.login_error_class}>{this.state.login_error}</div>
             <div className="form-group has-feedback">
               <input name="email" type="email" className="form-control" placeholder="Email" value={this.state.email} onChange={this.handleFormChange} />
               <span className="glyphicon glyphicon-envelope form-control-feedback"></span>

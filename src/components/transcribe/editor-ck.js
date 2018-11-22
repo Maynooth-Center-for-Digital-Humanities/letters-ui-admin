@@ -184,7 +184,7 @@ export default class TranscriptionEditor extends React.Component {
 
       let context = this;
       let path = APIPath+"admin/update-letter-transcription-page/"+letterId;
-      let accessToken = sessionStorage.getItem('accessToken');
+      let accessToken = sessionStorage.getItem('adminAccessToken');
       axios.defaults.headers.common['Authorization'] = 'Bearer '+accessToken;
       axios({
         method: 'POST',
@@ -259,7 +259,7 @@ export default class TranscriptionEditor extends React.Component {
       let archiveFilename = context.props.page.archive_filename;
 
       let path = APIPath+"admin/update-letter-transcription-page/"+letterId;
-      let accessToken = sessionStorage.getItem('accessToken');
+      let accessToken = sessionStorage.getItem('adminAccessToken');
       axios.defaults.headers.common['Authorization'] = 'Bearer '+accessToken;
       axios({
         method: 'POST',

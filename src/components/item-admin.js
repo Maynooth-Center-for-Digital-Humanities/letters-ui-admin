@@ -16,12 +16,17 @@ export default class ItemAdmin extends Component {
       showDeleteConfirm: false,
       redirect:false,
       updateTranscriptionStatusBtn:[],
-      updateTranscriptionSubmit: false
+      updateTranscriptionSubmit: false,
+      generateXMLSubmit:false,
+      generateXMLbtnText:'Generate XML',
+      generateXMLerrors:'',
+      generateXMLURL:'',
     }
     this.showDeleteConfirm = this.showDeleteConfirm.bind(this);
     this.hideDeleteConfirm = this.hideDeleteConfirm.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
     this.setTranscriptionStatus = this.setTranscriptionStatus.bind(this);
+    this.generateXML = this.generateXML.bind(this);
   }
 
   showDeleteConfirm(archive_filename) {
@@ -52,10 +57,16 @@ export default class ItemAdmin extends Component {
       crossDomain: true,
     })
     .then(function (response) {
-      context.setState({
-        showDeleteConfirm: false,
-        redirect:true,
-      })
+      if (response.data.status===true) {
+        context.setState({
+          showDeleteConfirm: false,
+          redirect:true,
+        });
+      }
+      else {
+        alert(response.data.errors);
+      }
+
     })
     .catch(function (error) {
       console.log(error);
@@ -95,6 +106,58 @@ export default class ItemAdmin extends Component {
     })
     .catch(function (error) {
       console.log(error);
+    });
+  }
+
+  generateXML() {
+    if (this.state.generateXMLSubmit) {
+      return false;
+    }
+    this.setState({
+      generateXMLSubmit: true,
+      generateXMLbtnText: <span>Working... <i className="fa fa-spin fa-circle-o-notch"></i></span>
+    });
+    let itemId = this.props.id;
+    let context = this;
+    let path = APIPath+"generate-xml/"+itemId;
+    let accessToken = sessionStorage.getItem('adminAccessToken');
+    axios.defaults.headers.common['Authorization'] = 'Bearer '+accessToken;
+    axios({
+      method: 'get',
+      url: path,
+      crossDomain: true,
+    })
+    .then(function (response) {
+      let responseData = response.data;
+      if (responseData.status) {
+        let errorText = "";
+        if (responseData.errors!=="") {
+          errorText = responseData.errors
+        }
+        context.setState({
+          generateXMLSubmit: false,
+          generateXMLbtnText:'Generate XML',
+          generateXMLerrors: errorText,
+          generateXMLURL: <a href={responseData.data.url} download>{responseData.data.filename}</a>,
+        })
+      }
+      else {
+        context.setState({
+          generateXMLSubmit: false,
+          generateXMLbtnText:'Generate XML',
+          generateXMLerrors: '',
+          generateXMLURL: '',
+        })
+      }
+
+    })
+    .catch(function (error) {
+      context.setState({
+        generateXMLSubmit: false,
+        generateXMLbtnText:'Generate XML',
+        generateXMLerrors: '',
+        generateXMLURL: ''
+      })
     });
   }
 
@@ -240,6 +303,10 @@ export default class ItemAdmin extends Component {
           </div>
 
           <div className="form-group">
+            <label>Uploader: </label> {this.props.item.uploader.name} ({this.props.item.uploader.email})
+          </div>
+
+          <div className="form-group">
             <label>Other versions: </label>
             <div>{otherVersions}</div>
           </div>
@@ -254,6 +321,11 @@ export default class ItemAdmin extends Component {
                 </div>
                 <div style={{marginLeft: "15px", display: "inline-block"}}>{this.state.updateTranscriptionStatusBtn}</div>
               </div>
+            </div>
+            <div className="form-group">
+              <label>Generate XML</label><br/>
+              <button type="button" className="btn btn-letters btn-sm" onClick={this.generateXML}>{this.state.generateXMLbtnText}</button>
+              <span style={{paddingLeft: "15px"}}>{this.state.generateXMLURL}</span>
             </div>
             {file}
           </div>

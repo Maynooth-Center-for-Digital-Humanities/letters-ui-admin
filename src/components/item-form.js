@@ -69,6 +69,7 @@ export default class ItemForm extends Component {
       this.calculateDays(year,month);
       day = dateArr[2];
     }
+
     let keywordsData = [];
     let topics = itemData.topics;
     for (let i=0;i<topics.length; i++) {
@@ -129,7 +130,6 @@ export default class ItemForm extends Component {
       itemNotes = "";
     }
 
-
     this.setState({
       title: itemTitle,
       document_id: itemDocumentId,
@@ -152,6 +152,7 @@ export default class ItemForm extends Component {
   }
 
   calculateDays(year,month) {
+    month = parseInt(month,10)-1;
     let days = calculateDaysInMonth(year,month);
     let daysOptions = [<option key={0} value=""> -- </option>];
     for (let i=1; i<=days; i++) {
@@ -180,6 +181,19 @@ export default class ItemForm extends Component {
     let target = e.target;
     let value = target.type === 'checkbox' ? target.checked : target.value;
     let name = target.name;
+
+    if (name==="month") {
+      let year = parseInt(this.state.year,10);
+      let month = parseInt(value,10)-1;
+      this.calculateDays(year,month);
+    }
+    if (name==="year") {
+      let year = parseInt(value,10);
+      if (this.state.month!=="") {
+        let month = parseInt(this.state.month,10)-1;
+        this.calculateDays(year,month);
+      }
+    }
     this.setState({
       [name]: value
     });

@@ -57,6 +57,12 @@ export default class ItemPages extends React.Component {
 	  .then(function (response) {
       if (response.data.status===true) {
         let newPage = Object.assign({}, context.state.page);
+        for (let i=0;i<response.data.data.length; i++) {
+          let page = response.data.data[i];
+          if (page.archive_filename===context.state.page.archive_filename) {
+            newPage = page;
+          }
+        }
         newPage['transcription_status'] = newTranscriptionStatus;
         context.setState({
           updateTranscriptionSubmit: false,

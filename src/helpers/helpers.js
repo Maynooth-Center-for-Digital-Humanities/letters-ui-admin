@@ -203,6 +203,8 @@ export function NormalizeWPURL(href) {
   if (typeof href!=="undefined" && href!=="") {
     let newHref = href.replace("http://letters1916.maynoothuniversity.ie/learn/index.php/", domain+"/wp-post/");
     newHref = href.replace("http://letters1916.maynoothuniversity.ie/learn/", domain+"/wp-post/");
+    newHref = href.replace("http://letters1623.mucampus.ie/learn/index.php/", domain+"/wp-post/");
+    newHref = href.replace("http://letters1623.mucampus.ie/learn/", domain+"/wp-post/");
     newHref = newHref.replace(domain+"/learn/index.php/", domain+"/wp-post/");
     newHref = newHref.replace(domain+"/learn/", domain+"/wp-post/");
     if (newHref.includes("wp-content")) {
@@ -234,6 +236,9 @@ export function NormalizeMenuWPURL(href) {
   let normalizedURL = href;
   if (escapeURLs.indexOf(href)===-1) {
     let newHref = href.replace("http://letters1916.maynoothuniversity.ie/learn/index.php/", domain+"/wp-post/");
+    newHref = href.replace("http://letters1916.maynoothuniversity.ie/learn/", domain+"/wp-post/");
+    newHref = href.replace("http://letters1623.mucampus.ie/learn/index.php/", domain+"/wp-post/");
+    newHref = href.replace("http://letters1623.mucampus.ie/learn/", domain+"/wp-post/");
     newHref = newHref.replace(domain+"/learn/index.php/", domain+"/wp-post/");
     let lastChar = newHref.slice(-1);
     if (lastChar==="/") {

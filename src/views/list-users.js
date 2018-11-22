@@ -196,6 +196,7 @@ export class UsersListView extends Component {
   }
 
   updateUserGroupsFilter(id, name) {
+    console.log(id, name);
     this.setState({
       userGroupsFilterText: name,
       userGroupsFilterId: id,
@@ -330,7 +331,6 @@ export class UsersListView extends Component {
           <td className="text-center">{editIcon}</td>
         </tr>;
         modalUserRoles.push(row);
-
         let userGroupFilter = <MenuItem key={count} onClick={context.updateUserGroupsFilter.bind(this,modalUserRole.id,modalUserRole.name)}>{modalUserRole.name}</MenuItem>;
 
         userGroupsFilter.push(userGroupFilter);
